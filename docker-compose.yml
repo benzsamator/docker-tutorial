@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  php-apache-tutorial:
+    build: ./build-php/
+    volumes:
+      - ./www:/var/www/html
+    links: 
+      - mysql-tutorial:mysql
+    ports:
+      - 80:80
+    restart: always
+
+  mysql-tutorial:
+    image: mysql:5.7
+    volumes:
+      - ./mysql:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=testPassword
+      - MYSQL_USER=benzsamator
+      - MYSQL_PASSWORD=benzZaa
+    restart: always
+  
+  phpmyadmin-tutorial:
+    image: phpmyadmin/phpmyadmin:4.7
+    links: 
+      - mysql-tutorial:db
+    ports:
+      - 8001:80
+    restart: always
